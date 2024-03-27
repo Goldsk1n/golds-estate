@@ -1,0 +1,17 @@
+{
+  "name": "golds-estate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon backend/index.js",
+    "start": "node backend/index.js"
+  },
+  "repository": "https://github.com/Goldsk1n/golds-estate.git",
+  "author": "<denzik252@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0"
+  }
+}
