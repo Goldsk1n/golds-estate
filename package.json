@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon backend/index.js",
     "start": "node backend/index.js",
-    "build": "yarn build --cwd frontend"
+    "build": "yarn install && yarn --cwd frontend install && yarn --cwd frontend build"
   },
   "repository": "https://github.com/Goldsk1n/golds-estate.git",
   "author": "<denzik252@gmail.com>",
