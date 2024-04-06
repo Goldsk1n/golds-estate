@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon backend/index.js",
-    "start": "node backend/index.js"
+    "start": "node backend/index.js",
+	"build": "yarn install && yarn install --prefix client && yarn run build --prefix client"
   },
   "repository": "https://github.com/Goldsk1n/golds-estate.git",
   "author": "<denzik252@gmail.com>",

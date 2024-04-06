@@ -46,7 +46,7 @@ const listingSchema = new mongoose.Schema(
             type: Boolean,
             required: true,
         },
-        imageURLs: {
+        imageUrls: {
             type: Array,
             required: true,
         },
@@ -58,6 +58,6 @@ const listingSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const Listing = mongoose.model('Listing', listingSchema);
+const Listing = mongoose.model("Listing", listingSchema);
 
 export default Listing;

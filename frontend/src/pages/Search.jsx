@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListingItem from "../components/ListingItem";
 
 export default function Search() {
     const navigate = useNavigate();
-
     const [sidebardata, setSidebardata] = useState({
         searchTerm: "",
         type: "all",
@@ -14,6 +13,7 @@ export default function Search() {
         sort: "created_at",
         order: "desc",
     });
+
     const [loading, setLoading] = useState(false);
     const [listings, setListings] = useState([]);
     const [showMore, setShowMore] = useState(false);
@@ -73,9 +73,13 @@ export default function Search() {
             e.target.id === "sale"
         ) {
             setSidebardata({ ...sidebardata, type: e.target.id });
-        } else if (e.target.id === "searchTerm") {
+        }
+
+        if (e.target.id === "searchTerm") {
             setSidebardata({ ...sidebardata, searchTerm: e.target.value });
-        } else if (
+        }
+
+        if (
             e.target.id === "parking" ||
             e.target.id === "furnished" ||
             e.target.id === "offer"
@@ -87,8 +91,11 @@ export default function Search() {
                         ? true
                         : false,
             });
-        } else if (e.target.id === "sort_order") {
+        }
+
+        if (e.target.id === "sort_order") {
             const sort = e.target.value.split("_")[0] || "created_at";
+
             const order = e.target.value.split("_")[1] || "desc";
 
             setSidebardata({ ...sidebardata, sort, order });
@@ -108,27 +115,26 @@ export default function Search() {
         const searchQuery = urlParams.toString();
         navigate(`/search?${searchQuery}`);
     };
-    
+
     const onShowMoreClick = async () => {
         const numberOfListings = listings.length;
         const startIndex = numberOfListings;
         const urlParams = new URLSearchParams(location.search);
         urlParams.set("startIndex", startIndex);
         const searchQuery = urlParams.toString();
-        const res = await fetch(`/api/listing/get?${searchQuery}`);
+        const res = await fetch(`/backend/listing/get?${searchQuery}`);
         const data = await res.json();
         if (data.length < 9) {
             setShowMore(false);
         }
         setListings([...listings, ...data]);
     };
-
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen">
+            <div className="p-7  border-b-2 md:border-r-2 md:min-h-screen">
                 <form onSubmit={handleSubmit} className="flex flex-col gap-8">
                     <div className="flex items-center gap-2">
-                        <label className="whitespace-nowrap">
+                        <label className="whitespace-nowrap font-semibold">
                             Search Term:
                         </label>
                         <input
@@ -147,8 +153,8 @@ export default function Search() {
                                 type="checkbox"
                                 id="all"
                                 className="w-5"
-                                checked={(sidebardata.type = "all")}
                                 onChange={handleChange}
+                                checked={sidebardata.type === "all"}
                             />
                             <span>Rent & Sale</span>
                         </div>
@@ -157,8 +163,8 @@ export default function Search() {
                                 type="checkbox"
                                 id="rent"
                                 className="w-5"
-                                checked={(sidebardata.type = "rent")}
                                 onChange={handleChange}
+                                checked={sidebardata.type === "rent"}
                             />
                             <span>Rent</span>
                         </div>
@@ -167,8 +173,8 @@ export default function Search() {
                                 type="checkbox"
                                 id="sale"
                                 className="w-5"
-                                checked={(sidebardata.type = "sale")}
                                 onChange={handleChange}
+                                checked={sidebardata.type === "sale"}
                             />
                             <span>Sale</span>
                         </div>
@@ -177,8 +183,8 @@ export default function Search() {
                                 type="checkbox"
                                 id="offer"
                                 className="w-5"
-                                checked={sidebardata.offer}
                                 onChange={handleChange}
+                                checked={sidebardata.offer}
                             />
                             <span>Offer</span>
                         </div>
@@ -190,8 +196,8 @@ export default function Search() {
                                 type="checkbox"
                                 id="parking"
                                 className="w-5"
-                                checked={sidebardata.parking}
                                 onChange={handleChange}
+                                checked={sidebardata.parking}
                             />
                             <span>Parking</span>
                         </div>
@@ -200,31 +206,31 @@ export default function Search() {
                                 type="checkbox"
                                 id="furnished"
                                 className="w-5"
-                                checked={sidebardata.furnished}
                                 onChange={handleChange}
+                                checked={sidebardata.furnished}
                             />
                             <span>Furnished</span>
                         </div>
                     </div>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex items-center gap-2">
                         <label className="font-semibold">Sort:</label>
                         <select
+                            onChange={handleChange}
+                            defaultValue={"created_at_desc"}
                             id="sort_order"
                             className="border rounded-lg p-3"
-                            defaultValue={"created_at_desc"}
-                            onChange={handleChange}
                         >
                             <option value="regularPrice_desc">
                                 Price high to low
                             </option>
                             <option value="regularPrice_asc">
-                                Price low to high
+                                Price low to hight
                             </option>
                             <option value="createdAt_desc">Latest</option>
-                            <option value="CreatedAt_asc">Oldest</option>
+                            <option value="createdAt_asc">Oldest</option>
                         </select>
                     </div>
-                    <button className="bg-slate-700 text-white p-3 rounded-lg hover:opacity-95">
+                    <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95">
                         Search
                     </button>
                 </form>
